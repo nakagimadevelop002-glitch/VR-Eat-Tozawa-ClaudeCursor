@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+#pragma warning disable CS0618 // Suppress XR deprecated API warnings
+
 #if UNITY_2017_2_OR_NEWER
     using UnityEngine.XR;
 #else
