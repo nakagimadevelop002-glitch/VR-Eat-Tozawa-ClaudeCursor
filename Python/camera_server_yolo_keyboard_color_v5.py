@@ -1,12 +1,26 @@
-from flask import Flask, Response
+from flask import Flask, Response, request
 import cv2
 from ultralytics import YOLO
 import numpy as np
+import atexit
+import os
+import signal
 
 app = Flask(__name__)
 # camera = cv2.VideoCapture(00)
 camera = cv2.VideoCapture(0, cv2.CAP_MSMF)
 # camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
+
+def cleanup():
+    """カメラリソースの解放とクリーンアップ"""
+    if camera.isOpened():
+        camera.release()
+        print("[PythonServer] Camera released.")
+    print("[PythonServer] Server shutdown complete.")
+
+
+atexit.register(cleanup)
 
 # model = YOLO('yolov8n-seg.pt') #元々リンゴなどを検知できていたモデル
 model = YOLO('model_seg.pt') #新たに作成された容器を検知できるモデル
@@ -169,6 +183,14 @@ def generate_masked_frames():
 @app.route('/video_feed')
 def video_feed():
     return Response(generate_masked_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+@app.route('/shutdown', methods=['POST'])
+def shutdown():
+    """Unity側からのグレースフルシャットダウン要求"""
+    cleanup()
+    os.kill(os.getpid(), signal.SIGTERM)
+    return 'Server shutting down...'
 
 
 if __name__ == '__main__':

@@ -13,6 +13,14 @@ public class MJPEGStreamReader : MonoBehaviour
     [Range(0, 1)]
     public float threshold = 0.2f; // インスペクターで調整可能に
 
+    [Header("Server Connection")]
+    [Tooltip("サーバー起動待機時間（秒）")]
+    public float serverStartupDelay = 5.0f;
+    [Tooltip("接続リトライ間隔（秒）")]
+    public float retryInterval = 2.0f;
+    [Tooltip("最大リトライ回数（0で無制限）")]
+    public int maxRetryCount = 10;
+
     private Texture2D tex;
     private bool isTextureReady = false;
     private Material materialInstance;
@@ -95,11 +103,32 @@ public class MJPEGStreamReader : MonoBehaviour
 
     IEnumerator ReceiveMJPEG()
     {
-        while (true)
+        // サーバー起動を待機してから接続開始
+        if (serverStartupDelay > 0f)
+        {
+            Debug.Log($"[MJPEG] サーバー起動待機中... ({serverStartupDelay}秒)");
+            yield return new WaitForSeconds(serverStartupDelay);
+        }
+
+        int retryCount = 0;
+        while (maxRetryCount <= 0 || retryCount < maxRetryCount)
         {
             yield return StartCoroutine(ReceiveMJPEGInternal());
-            yield return new WaitForSeconds(1.0f); // エラー後の待機時間
+            retryCount++;
+
+            if (maxRetryCount > 0)
+            {
+                Debug.LogWarning($"[MJPEG] 接続リトライ ({retryCount}/{maxRetryCount})... {retryInterval}秒後に再接続");
+            }
+            else
+            {
+                Debug.LogWarning($"[MJPEG] 接続リトライ ({retryCount})... {retryInterval}秒後に再接続");
+            }
+
+            yield return new WaitForSeconds(retryInterval);
         }
+
+        Debug.LogError($"[MJPEG] 最大リトライ回数 ({maxRetryCount}) に到達。接続を中止します。");
     }
 
     private IEnumerator ReceiveMJPEGInternal()
@@ -119,7 +148,7 @@ public class MJPEGStreamReader : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError($"MJPEG接続エラー: {e.Message}");
+            Debug.LogWarning($"[MJPEG] 接続エラー: {e.Message}");
             yield break; // 接続エラーの場合は終了
         }
 
@@ -146,7 +175,7 @@ public class MJPEGStreamReader : MonoBehaviour
             }
             catch (Exception e)
             {
-                Debug.LogError($"ストリーム読み込みエラー: {e.Message}");
+                Debug.LogWarning($"[MJPEG] ストリーム読み込みエラー: {e.Message}");
                 yield break; // 読み込みエラーの場合は終了
             }
 
