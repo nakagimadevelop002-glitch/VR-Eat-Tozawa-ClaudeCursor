@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "unity-natural-mcp": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "C:\\Users\\nakaj\\Downloads\\mcp-stdio-to-streamable-http-main\\mcp-stdio-to-streamable-http-main\\dist\\index.js"
+      ],
+      "env": {
+        "MCP_SERVER_IP": "[::1]",
+        "MCP_SERVER_PORT": "56780"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "name": "TozawaMcpTools.Editor",
+    "rootNamespace": "",
+    "references": [
+        "UnityNaturalMCP.Editor",
+        "UniTask"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "ModelContextProtocol.dll",
+        "System.ComponentModel.Annotations.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
