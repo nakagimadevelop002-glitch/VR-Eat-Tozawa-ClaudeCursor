@@ -1,0 +1,3 @@
+[submodule "Assets/TozawaMCP"]
+	path = Assets/TozawaMCP
+	url = https://github.com/nakagimadevelop002-glitch/TozawaMCP-Toolkit.git

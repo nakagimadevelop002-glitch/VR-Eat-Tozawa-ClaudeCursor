@@ -7,13 +7,6 @@
       "dependencies": {},
       "hash": "73a63b7f672b88f7e9992f6917eb458a8cbb6fa9"
     },
-    "com.github-glitchenzo.nugetforunity": {
-      "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "c2af83c9d4f8cdaada9d4a0e94de2f195d8e1d01"
-    },
     "com.unity.collab-proxy": {
       "version": "2.11.3",
       "depth": 0,
@@ -178,11 +171,11 @@
       }
     },
     "jp.notargs.unity-natural-mcp": {
-      "version": "https://github.com/notargs/UnityNaturalMCP.git?path=/UnityNaturalMCPServer",
+      "version": "https://github.com/nakagimadevelop002-glitch/UnityNaturalMCP.git?path=/UnityNaturalMCPServer",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f3d2cd334bcb015b1e006c622a630b7b053bfb7a"
+      "hash": "ee6d08539a2615140a1350b8d3357ff61107b8b9"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
